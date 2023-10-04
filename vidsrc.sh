@@ -15,7 +15,7 @@ title=$(printf "%s" "$imdb_info" | cut -f2)
 
 data_id=$(curl -s "https://vidsrc.to/embed/movie/${imdb_id}" | sed -nE "s@.*data-id=\"([^\"]*)\".*@\1@p")
 [ -z "$data_id" ] && exit 1
-vidstream_id=$(curl -s "https://vidsrc.to/ajax/embed/episode/${data_id}/sources" | tr '{}' '\n' | sed -nE "s@.*\"id\":\"([^\"]*)\".*\"Vidstream.*@\1@p")
+vidstream_id=$(curl -s "https://vidsrc.to/ajax/embed/episode/${data_id}/sources" | tr '{}' '\n' | sed -nE "s@.*\"id\":\"([^\"]*)\".*\"Vidplay.*@\1@p")
 [ -z "$vidstream_id" ] && exit 1
 
 encrypted_provider_url=$(curl -s "https://vidsrc.to/ajax/embed/source/${vidstream_id}" | sed -nE "s@.*\"url\":\"([^\"]*)\".*@\1@p")
