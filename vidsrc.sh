@@ -15,10 +15,10 @@ title=$(printf "%s" "$imdb_info" | cut -f2)
 
 data_id=$(curl -s "https://vidsrc.to/embed/movie/${imdb_id}" | sed -nE "s@.*data-id=\"([^\"]*)\".*@\1@p")
 [ -z "$data_id" ] && exit 1
-vidstream_id=$(curl -s "https://vidsrc.to/ajax/embed/episode/${data_id}/sources" | tr '{}' '\n' | sed -nE "s@.*\"id\":\"([^\"]*)\".*\"Vidstream.*@\1@p")
-[ -z "$vidstream_id" ] && exit 1
+vidplay_id=$(curl -s "https://vidsrc.to/ajax/embed/episode/${data_id}/sources" | tr '{}' '\n' | sed -nE "s@.*\"id\":\"([^\"]*)\".*\"Vidplay.*@\1@p")
+[ -z "$vidplay_id" ] && exit 1
 
-encrypted_provider_url=$(curl -s "https://vidsrc.to/ajax/embed/source/${vidstream_id}" | sed -nE "s@.*\"url\":\"([^\"]*)\".*@\1@p")
+encrypted_provider_url=$(curl -s "https://vidsrc.to/ajax/embed/source/${vidplay_id}" | sed -nE "s@.*\"url\":\"([^\"]*)\".*@\1@p")
 [ -z "$encrypted_provider_url" ] && exit 1
 
 provider_embed=$(curl -s "$base_helper_url/fmovies-decrypt?query=${encrypted_provider_url}&apikey=jerry" | sed -nE "s@.*\"url\":\"([^\"]*)\".*@\1@p")
