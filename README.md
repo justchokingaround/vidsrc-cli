@@ -5,6 +5,7 @@ Watch movie or series from your terminal
 # Requirements
 1) pup
 2) fzf
+3) mpv
 
 origninal: https://github.com/justchokingaround/vidsrc-cli
 
